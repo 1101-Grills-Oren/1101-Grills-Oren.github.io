@@ -26,10 +26,10 @@ export function Home({}: Props) {
 				{smallScreen ? /* mobile */ <>
 					<PopularGenerators />
 					<FavoriteGenerators />
-					<WhatsNew />
+					
 					<Changelog />
 					<Versions />
-					<Tools />
+					
 				</> : /* desktop */ <>
 					<div class="card-column">
 						<PopularGenerators />
