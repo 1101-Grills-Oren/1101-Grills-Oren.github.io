@@ -84,6 +84,10 @@ const SLOTS = {
 	'smelting.result': [115, 34],
 	'stonecutting.ingredient': [19, 32],
 	'stonecutting.result': [142, 32],
+	'pressing.ingredient.0': [19, 32],
+	'pressing.result.0': [142, 32],
+	'pressing.ingredient.1': [37, 32],
+	'pressing.result.1': [160, 32],
 	'smithing.template': [7, 47],
 	'smithing.base': [25, 47],
 	'smithing.addition': [43, 47],
@@ -158,6 +162,12 @@ function placeItems(version: VersionId, recipe: any, animation: number, itemTags
 		if (choices.length > 0) {
 			const choice = choices[animation % choices.length]
 			items.set('stonecutting.ingredient' as Slot, choice)
+		}
+	} else if (type === 'create:pressing') {
+		const choices = allIngredientChoices(version, recipe.ingredient, itemTags)
+		if (choices.length > 0) {
+			const choice = choices[animation % choices.length]
+			items.set('pressing.ingredient' as Slot, choice)
 		}
 	} else if (type === 'smithing_transform' || type === 'smithing_trim') {
 		for (const ingredient of ['template', 'base', 'addition'] as const) {
