@@ -6,7 +6,7 @@ type AdProps = {
 	type: 'text' | 'image',
 	id: string,
 }
-export function Ad({ type, id }: AdProps) {
+export function Ad() {
 	useEffect(() => {
 		document.getElementById('ad-placeholder')?.remove()
 		if ('ethicalads' in window) {
