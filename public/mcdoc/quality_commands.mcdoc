@@ -4,8 +4,8 @@ dispatch minecraft:resource[quality_commands:data_block] to struct AmalgamBlockA
 	///Function to run if requirements met
 	function?: string,
 	blocks?: [AmalgamBlockSetblockAction],
-	minpwr?: 0..15,
-	maxpwr?: 0..15,
+	minpwr?: integer@0..15,
+	maxpwr?: integer@0..15,
 }
 struct AmalgamBlockSetblockAction {
 	id: #[id="block"] string,
@@ -16,7 +16,7 @@ struct AmalgamBlockSetblockAction {
 }
 struct SetblockCondition {
 	///-1: no requirement; 0; required nonsolid; 1; required solid
-	solid?: -1..1,
+	solid?: integer@-1..1,
 	///If present, requires that block matches id.
 	id?: #[id="block"] string,
 }
