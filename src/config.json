@@ -1116,7 +1116,7 @@
     {
       "id": "quality_commands:data_block",
       "url": "quality_commands/data-block",
-      "path": "quality_commands/data-block",
+      "path": "quality_commands/data_block",
       "tags": ["partners"],
       "dependency": "quality_commands",
       "minVersion": "1.21.10",
