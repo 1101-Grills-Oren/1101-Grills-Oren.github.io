@@ -1121,7 +1121,7 @@
       "dependency": "quality_commands",
       "minVersion": "1.21.10",
       "wiki": "https://docs.neoforged.net/docs/worldgen/biomemodifier"
-    },
+    }
   ],
   "legacyGuides": [
     {
