@@ -1,5 +1,4 @@
 dispatch minecraft:resource[quality_commands:data_block] to struct AmalgamBlockActionRecord {
 	offset?:[double]@3..3 = [0.0,0.0,0.0],
-	blockid:#[id="block"] string,
-	
+	properties?:[[string]@2..2] = [],
 }
