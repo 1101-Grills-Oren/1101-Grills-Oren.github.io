@@ -1112,7 +1112,16 @@
       "dependency": "pixelmon",
       "wiki": "https://pixelmonmod.com/wiki/",
       "minVersion": "1.21.1"
-    }
+    },
+    {
+      "id": "quality_commands:data_block",
+      "url": "quality_commands/data-block",
+      "path": "quality_commands/data-block",
+      "tags": ["partners"],
+      "dependency": "quality_commands",
+      "minVersion": "1.21.10",
+      "wiki": "https://docs.neoforged.net/docs/worldgen/biomemodifier"
+    },
   ],
   "legacyGuides": [
     {
