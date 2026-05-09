@@ -119,7 +119,8 @@ enum(string) EnumType {
 	SculkSensorPhase = "sculk_sensor_phase",
 }
 enum(string) BlockStatePropertyType {
-	Boolean = "bool",
+	Bool = "bool",
+	Boolean = "boolean",
 	Integer = "int",
 	Enum = "enum",
 }
