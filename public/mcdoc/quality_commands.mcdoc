@@ -1,22 +1,169 @@
-dispatch minecraft:resource[quality_commands:data_block] to struct AmalgamBlockActionRecord {
+use ::java::util::color::DyeColor
+dispatch minecraft:resource[quality_commands:data_block] to struct BlockSettingsRecord {
+	///must be set to namespace of block
+	namespace: string,
+	///must be set to path of block
+	id: string,
+	///block type; can either be the id of a vanilla block to copy, `ExplosiveBlock`, `FacingExplosiveBlock`,`Block`, or `AmalgamBlock`.
+	///Defaults to `Block`
+	type?: string,
+	explodeCommand?: string,
+	onExplodedCommand?: string,
+	standardProperties?: StandardProperties,
+	///Unused unless the block is of type `AmalgamBlock`
+	amalgamSpecific?: AmalgamSpecific,
+}
+struct StandardProperties {
+	///Color that this block should appear as on the map. Defaults to purple.
+	mapColor?: DyeColor,
+	///should the block be transparent? defaults to false
+	nonOpaque?: bool,
+	///If the block should have no collision. Also sets nonOpaque to true when true. Defaults to false.
+	noCollision?: bool,
+	///block slipperiness. Defaults to 0
+	slipperiness?: float,
+	///multiplies current velocity every tick. Defaults to 1
+	velocityMultiplier?: float,
+	///Multiplier applied to jump strength. Defaults to 1
+	jumpVelocityMultiplier?: float,
+	hardness?: float,
+	resistance?: float,
+}
+struct AmalgamSpecific {
+	properties?: [BlockStateProperty],
+	collisionShape?: VoxelShapeConditionsRecord,
+	///List of block tags. Block tags CANNOT be set in the normal way for these blocks.
+	tags?: [string],
+	///Action to be run on a neighbor update.
+	///Disclaimer: Currently, does NOT allow checking what block caused the update.
+	neighborUpdate?: [AmalgamBlockActionRecord],
+	///Action to be run on a scheduled update.
+	scheduledUpdate?: [AmalgamBlockActionRecord],
+	///Action to be run every tick an entitys hitbox overlaps with the block area of this block.
+	///Entities that are overlapping have the tag `trigger_entity_onentitycollision` for the duration.
+	entityCollide?: [AmalgamBlockActionRecord],
+	///Action to be run on the block being placed.
+	place?: [AmalgamBlockActionRecord],
+	///Action to be run on use. Entity that used the block has tag `trigger_entity_onused` for the duration.
+	///Add tag `actionresult_success` to make no other actions happen from the right click; If something happened, add that tag.
+	use?: [AmalgamBlockActionRecord],
+}
+type VoxelShapeConditionsRecord = [VoxelShapeConditionRecord]
+struct VoxelShapeConditionRecord {
+	///Condition for this shape to be added to current shape
+	condition:MultiPropertyCheckRecord,
+	///Shape to be added
+	shape:VoxelShape,
+}
+struct VoxelShape {
+	///Minimum is 0,0,0 and maximum is 16,16,16.
+	voxels:[Box],
+}
+struct Box {
+	min:Vec3d,
+	max:Vec3d,
+}
+type Vec3d = [double]@3..3
+struct BlockStateProperty {
+	///name of property
+	name:string,
+	///type of property. Must be one of `bool`,`int`,`enum`
+	type:BlockStatePropertyType,
+	///minimum value of property. Only when type matches `int`
+	min?:int,
+	///maximum value of property. Only when type matches `int`
+	max?:int,
+	///What should the property default to? Must be a value in the property. If not, defaults to an arbitrary value in the property.
+	default?:string,
+	///Type of enum. Only when type matches `enum`
+	enum_type?:EnumType,
+	placement_mode?:PlacementMode,
+}
+enum(string) PlacementMode {
+	Default = "default",
+	///Direction only
+	///The direction the player is facing
+	PlayerLookDirection = "playerlookdirection",
+	///Direction only
+	///Opposite of the direction the player is facing
+	PlayerLookDirectionOpposite = "playerlookdirectionopposite",
+	///Direction only
+	///direction of block face that block was placed on
+	TargetFaceSide = "targetfaceside",
+	///Direction only
+	///opposite of direction of block face that block was placed on
+	TargetFaceSideOpposite = "targetfacesideopposite",
+	///Boolean only
+	Waterlogged = "waterlogged",
+}
+enum(string) EnumType {
+	Direction = "direction",
+	Orientation = "orientation",
+	BlockFace = "block_face",
+	Attachment = "attachment",
+	WallShape = "wall_shape",
+	WireConnection = "wire_connection",
+	RailShape = "rail_shape",
+	BedPart = "bed_part",
+	ChestType = "chest_type",
+	ComparatorMode = "comparator_mode",
+	DoorHinge = "door_hinge",
+	NoteBlockInstrument = "note_block_instrument",
+	PistonType = "piston_type",
+	SlabType = "slab_type",
+	StairShape = "stair_shape",
+	StructureBlockMode = "structure_block_mode",
+	BambooLeaves = "bamboo_leaves",
+	Tilt = "tilt",
+	Thickness = "thickness",
+	SculkSensorPhase = "sculk_sensor_phase",
+}
+enum(string) BlockStatePropertyType {
+	Boolean = "bool",
+	Integer = "int",
+	Enum = "enum",
+}
+struct AmalgamBlockActionRecord {
 	///Avoid using this as it reparses every time. Low on performance.
 	command?: string,
 	///Function to run if requirements met
 	function?: string,
+	///blocks to set
 	blocks?: [AmalgamBlockSetblockAction],
-	minpwr?: integer@0..15,
-	maxpwr?: integer@0..15,
+	///condition to be met on current block to run action
+	condition?:MultiPropertyCheckRecord,
+	///minimum recieved redstone power at block required
+	minpwr?: int@0..15,
+	///maximum recieved redstone power at block required
+	maxpwr?: int@0..15,
 }
 struct AmalgamBlockSetblockAction {
+	///id of block to set
 	id: #[id="block"] string,
+	///list of properties to set in the format [name,value]
 	properties?:[[string]@2..2],
+	///offset from current block to run at
 	offset?:[double]@3..3,
+	///condition that must be fulfilled first
 	condition?:SetblockCondition,
+	///should this trigger block updates?
 	strict?:boolean,
 }
 struct SetblockCondition {
 	///-1: no requirement; 0; required nonsolid; 1; required solid
-	solid?: integer@-1..1,
+	solid?: int@-1..1,
 	///If present, requires that block matches id.
 	id?: #[id="block"] string,
+}
+struct MultiPropertyCheckRecord {
+	///list of checks; all must be fulfilled for this check to be fulfilled
+	checks:[SinglePropertyCheckRecord],
+	///inverts whether this check is fulfilled or not
+	inverted?:bool,
+}
+struct SinglePropertyCheckRecord {
+	///name of property
+	name:string,
+	///value of property
+	value:string,
 }
