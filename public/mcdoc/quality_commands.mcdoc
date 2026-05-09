@@ -17,9 +17,9 @@ struct StandardProperties {
 	///Color that this block should appear as on the map. Defaults to purple.
 	mapColor?: DyeColor,
 	///should the block be transparent? defaults to false
-	nonOpaque?: bool,
+	nonOpaque?: boolean,
 	///If the block should have no collision. Also sets nonOpaque to true when true. Defaults to false.
-	noCollision?: bool,
+	noCollision?: boolean,
 	///block slipperiness. Defaults to 0
 	slipperiness?: float,
 	///multiplies current velocity every tick. Defaults to 1
@@ -159,7 +159,7 @@ struct MultiPropertyCheckRecord {
 	///list of checks; all must be fulfilled for this check to be fulfilled
 	checks:[SinglePropertyCheckRecord],
 	///inverts whether this check is fulfilled or not
-	inverted?:bool,
+	inverted?:boolean,
 }
 struct SinglePropertyCheckRecord {
 	///name of property
