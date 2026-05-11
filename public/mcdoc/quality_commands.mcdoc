@@ -162,7 +162,7 @@ enum(string) BlockSoundGroupPreset{
     Iron = "iron",
     DriedGhast = "dried_ghast",
 }
-type BlockSoundGroup = BlockSoundGroupRecord | BlockSoundGroupPreset
+type BlockSoundGroup = (BlockSoundGroupRecord | BlockSoundGroupPreset)
 struct AmalgamSpecific {
 	properties?: [BlockStateProperty],
 	collisionShape?: VoxelShapeConditionsRecord,
