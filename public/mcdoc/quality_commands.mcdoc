@@ -1,4 +1,5 @@
 use ::java::util::color::DyeColor
+use ::java::util::attribute::AttributeOperation
 dispatch minecraft:resource[quality_commands:data_block] to struct BlockSettingsRecord {
 	///must be set to namespace of block
 	namespace: string,
@@ -13,6 +14,30 @@ dispatch minecraft:resource[quality_commands:data_block] to struct BlockSettings
 	///Unused unless the block is of type `AmalgamBlock`
 	amalgamSpecific?: AmalgamSpecific,
 }
+
+dispatch minecraft:resource[quality_commands:data_effect] to struct CustomStatusEffectRecord {
+	category: StatusEffectCategory,
+    color: #[color="composite_rgb"] int,
+	attributeModifiers?:AttributeModifiers
+    tickCommand?: string,
+    applyCommand?: string,
+    damageEntityCommand?:string,
+    removeEntityCommand?:string
+}
+enum(string) StatusEffectCategory{
+	Beneficial= "beneficial",
+    Harmful="harmful",
+    Neutral="neutral",
+}
+struct AttributeModifiers {
+	[#[id="attribute"] string]:AttributeModifier
+}
+struct AttributeModifier {
+	id:string,
+	base_value: double,
+	operation: AttributeOperation,
+}
+
 struct StandardProperties {
 	///Color that this block should appear as on the map. Defaults to purple.
 	mapColor?: DyeColor,
