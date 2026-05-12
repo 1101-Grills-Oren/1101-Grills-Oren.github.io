@@ -25,12 +25,12 @@ dispatch minecraft:resource[quality_commands:data_effect] to struct CustomStatus
     removeEntityCommand?:string
 }
 enum(string) StatusEffectCategory{
-	Beneficial= "beneficial",
-    Harmful="harmful",
-    Neutral="neutral",
+	Beneficial = "beneficial",
+    Harmful = "harmful",
+    Neutral = "neutral",
 }
 struct AttributeModifiers {
-	[#[id="attribute"] string]:AttributeModifier
+	[#[id="attribute"] string] : AttributeModifier,
 }
 struct AttributeModifier {
 	id:string,
