@@ -1121,6 +1121,15 @@
       "dependency": "quality_commands",
       "minVersion": "1.21.10",
       "wiki": "https://docs.neoforged.net/docs/worldgen/biomemodifier"
+    },
+    {
+      "id": "quality_commands:data_effect",
+      "url": "quality_commands/data-effect",
+      "path": "quality_commands/data_effect",
+      "tags": ["partners"],
+      "dependency": "quality_commands",
+      "minVersion": "1.21.10",
+      "wiki": "https://docs.neoforged.net/docs/worldgen/biomemodifier"
     }
   ],
   "legacyGuides": [
