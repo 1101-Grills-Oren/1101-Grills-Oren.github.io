@@ -18,7 +18,7 @@ dispatch minecraft:resource[quality_commands:data_block] to struct BlockSettings
 dispatch minecraft:resource[quality_commands:data_effect] to struct CustomStatusEffectRecord {
 	category: StatusEffectCategory,
     color: #[color="composite_rgb"] int,
-	attributeModifiers?:AttributeModifiers
+	attributeModifiers?:AttributeModifiers,
     tickCommand?: string,
     applyCommand?: string,
     damageEntityCommand?:string,
