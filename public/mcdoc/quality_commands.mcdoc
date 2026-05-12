@@ -22,7 +22,9 @@ dispatch minecraft:resource[quality_commands:data_effect] to struct CustomStatus
     tickCommand?: string,
     applyCommand?: string,
     damageEntityCommand?:string,
-    removeEntityCommand?:string
+    removeEntityCommand?:string,
+	///List of model overlay textures. Example: ```"minecraft:textures/item/texture_name.png"```
+	overlays?:[string]
 }
 enum(string) StatusEffectCategory{
 	Beneficial = "beneficial",
