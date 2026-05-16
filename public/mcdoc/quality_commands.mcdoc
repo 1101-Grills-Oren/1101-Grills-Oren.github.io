@@ -13,8 +13,11 @@ dispatch minecraft:resource[quality_commands:data_block] to struct BlockSettings
 	standardProperties?: StandardProperties,
 	///Unused unless the block is of type `AmalgamBlock`
 	amalgamSpecific?: AmalgamSpecific,
+	arguments?: [blockargument],
+	///List of block tags. Block tags CANNOT be set in the normal way for these blocks.
+	tags?: [string],
 }
-
+type blockargument=((#[id="block"] string)|("#"+(#[color="hex_rgb"] string)))
 dispatch minecraft:resource[quality_commands:data_effect] to struct CustomStatusEffectRecord {
 	category: StatusEffectCategory,
     color: #[color="composite_rgb"] int,
@@ -41,8 +44,10 @@ struct AttributeModifier {
 }
 
 struct StandardProperties {
+	///Block to copy property from. 
+	parent?: #[id="block"] string,
 	///Color that this block should appear as on the map. Defaults to purple.
-	mapColor?: DyeColor,
+	mapColor?: MapColor,
 	///should the block be transparent? defaults to false
 	nonOpaque?: boolean,
 	///If the block should have no collision. Also sets nonOpaque to true when true. Defaults to false.
@@ -56,6 +61,70 @@ struct StandardProperties {
 	hardness?: float,
 	resistance?: float,
 	soundGroup?: BlockSoundGroup,
+}
+enum(string) MapColor {
+	CLEAR = "clear",
+	PALE_GREEN = "pale_green",
+	PALE_YELLOW = "pale_yellow",
+	WHITE_GRAY = "white_gray",
+	BRIGHT_RED = "bright_red",
+	PALE_PURPLE = "pale_purple",
+	IRON_GRAY = "iron_gray",
+	DARK_GREEN = "dark_green",
+	WHITE = "white",
+	LIGHT_BLUE_GRAY = "light_blue_gray",
+	DIRT_BROWN = "dirt_brown",
+	STONE_GRAY = "stone_gray",
+	WATER_BLUE = "water_blue",
+	OAK_TAN = "oak_tan",
+	OFF_WHITE = "off_white",
+	ORANGE = "orange",
+	MAGENTA = "magenta",
+	LIGHT_BLUE = "light_blue",
+	YELLOW = "yellow",
+	LIME = "lime",
+	PINK = "pink",
+	GRAY = "gray",
+	LIGHT_GRAY = "light_gray",
+	CYAN = "cyan",
+	PURPLE = "purple",
+	BLUE = "blue",
+	BROWN = "brown",
+	GREEN = "green",
+	RED = "red",
+	BLACK = "black",
+	GOLD = "gold",
+	DIAMOND_BLUE = "diamond_blue",
+	LAPIS_BLUE = "lapis_blue",
+	EMERALD_GREEN = "emerald_green",
+	SPRUCE_BROWN = "spruce_brown",
+	DARK_RED = "dark_red",
+	TERRACOTTA_WHITE = "terracotta_white",
+	TERRACOTTA_ORANGE = "terracotta_orange",
+	TERRACOTTA_MAGENTA = "terracotta_magenta",
+	TERRACOTTA_LIGHT_BLUE = "terracotta_light_blue",
+	TERRACOTTA_YELLOW = "terracotta_yellow",
+	TERRACOTTA_LIME = "terracotta_lime",
+	TERRACOTTA_PINK = "terracotta_pink",
+	TERRACOTTA_GRAY = "terracotta_gray",
+	TERRACOTTA_LIGHT_GRAY = "terracotta_light_gray",
+	TERRACOTTA_CYAN = "terracotta_cyan",
+	TERRACOTTA_PURPLE = "terracotta_purple",
+	TERRACOTTA_BLUE = "terracotta_blue",
+	TERRACOTTA_BROWN = "terracotta_brown",
+	TERRACOTTA_GREEN = "terracotta_green",
+	TERRACOTTA_RED = "terracotta_red",
+	TERRACOTTA_BLACK = "terracotta_black",
+	DULL_RED = "dull_red",
+	DULL_PINK = "dull_pink",
+	DARK_CRIMSON = "dark_crimson",
+	TEAL = "teal",
+	DARK_AQUA = "dark_aqua",
+	DARK_DULL_PINK = "dark_dull_pink",
+	BRIGHT_TEAL = "bright_teal",
+	DEEPSLATE_GRAY = "deepslate_gray",
+	RAW_IRON_PINK = "raw_iron_pink",
+	LICHEN_GREEN = "lichen_green",
 }
 struct BlockSoundGroupRecord {
 	volume: float,
@@ -193,8 +262,6 @@ type BlockSoundGroup = (BlockSoundGroupRecord | BlockSoundGroupPreset)
 struct AmalgamSpecific {
 	properties?: [BlockStateProperty],
 	collisionShape?: VoxelShapeConditionsRecord,
-	///List of block tags. Block tags CANNOT be set in the normal way for these blocks.
-	tags?: [string],
 	///Action to be run on a neighbor update.
 	///Disclaimer: Currently, does NOT allow checking what block caused the update.
 	neighborUpdate?: [AmalgamBlockActionRecord],
