@@ -18,7 +18,7 @@ dispatch minecraft:resource[quality_commands:data_block] to struct BlockSettings
 	///In order to check based on a tag, you will still have to define a block tag with no entries in the ususal manner in order for these tags to be usable anywhere except F3.
 	tags?: [string],
 }
-type blockargument=((#[color="hex_rgb"] string),(#[id="block"] string))
+type blockargument=((#[color="hex_rgb"] string)|(#[id="block"] string))
 dispatch minecraft:resource[quality_commands:data_effect] to struct CustomStatusEffectRecord {
 	category: StatusEffectCategory,
     color: #[color="composite_rgb"] int,
