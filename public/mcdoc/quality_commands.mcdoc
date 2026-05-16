@@ -13,8 +13,8 @@ dispatch minecraft:resource[quality_commands:data_block] to struct BlockSettings
 	standardProperties?: StandardProperties,
 	///Unused unless the block is of type `AmalgamBlock`
 	amalgamSpecific?: AmalgamSpecific,
-	///List of arguments to be passed to the block constructor. The game WILL crash if these are invalid or do not match the block
-	///Current options: Color (#rrggbb), Block (identifier,VANILLA)
+	///List of arguments to be passed to the block constructor. The game WILL crash if these are invalid or do not match the block\n
+	///Current options: Color (#rrggbb), Block (identifier,VANILLA)\n
 	///enter #000 to change to color setter
 	arguments?: [blockargument],
 	///List of block tags. Block tags CANNOT be set in the normal way for these blocks due to technical difficulties.
@@ -23,8 +23,8 @@ dispatch minecraft:resource[quality_commands:data_block] to struct BlockSettings
 }
 type colorString=((#[color="hex_rgb"] string)="#FF015B")
 type blockId=(#[id="block"] string)
-type soundEvent=(#[id="sound_event"] string)
-type blockargument=(colorString|soundEvent|blockId|BlockSetType)
+//type soundEvent=(#[id="sound_event"] string)
+type blockargument=(colorString|blockId|BlockSetType)
 dispatch minecraft:resource[quality_commands:data_effect] to struct CustomStatusEffectRecord {
 	//Whether the effect is beneficial, harmful, or neutral
 	category: StatusEffectCategory,
@@ -35,29 +35,29 @@ dispatch minecraft:resource[quality_commands:data_effect] to struct CustomStatus
 	attributeModifiers?:AttributeModifiers,
 	//A .mcfunction file to be run every tick an entity has this effect; If the listed function isn't present, logs "Function {command} not present!"
     //Entity Tags:
-	//\t`effect_target`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction.
+	//t`effect_target`tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction.
 	tickCommand?: string,
 	//A .mcfunction file to be run whenever an entity is given this effect; If the listed function isn't present, logs "Function {command} not present!"
 	//Due to technical difficulties, this argument doesn't work at the moment
     //Entity Tags:
-	//\t`effect_target`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction.
+	//t`effect_target`tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction.
 	applyCommand?: string,
 	//A .mcfunction file to be run whenver entity with this effect takes damage; If the listed function isn't present, logs "Function {command} not present!"
 	//Data values in the damaged entity:
-	//\t`data.last_damage_type`\tThe damage type of the last damage taken, as a string.
-	//\t`data.last_damage_amount`\tThe amount of the last damage taken, as a float.
+	//t`data.last_damage_type`tThe damage type of the last damage taken, as a string.
+	//t`data.last_damage_amount`tThe amount of the last damage taken, as a float.
 	//Entity Tags:
-	//\t`effect_target`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction.
-	//\t`attacker`\tApplied to the entity that damaged the entity with the effect. Only during the duration of the execution of the listed .mcfunction. May not exist.
+	//t`effect_target`tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction.
+	//t`attacker`tApplied to the entity that damaged the entity with the effect. Only during the duration of the execution of the listed .mcfunction. May not exist.
     damageEntityCommand?:string,
 	//A .mcfunction file to be run whenever an entity with this effect is removed from the world; If the listed function isn't present, logs "Function {command} not present!"
 	//Entity Tags:
-	//\t`effect_target`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction.
-	//\t`removed_because_killed`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction. Only if the entity is being removed because it was killed.
-	//\t`removed_because_discarded`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction. Only if the entity is being removed because it was despawned.
-	//\t`removed_because_unloaded_chunk`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction. Only if the entity is being removed because it was unloaded with a world chunk.
-	//\t`removed_because_unloaded_player`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction. Only if the entity is being removed because it was unloaded with a player, usually as a mount.
-	//\t`removed_because_changed_dimension`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction. Only if the entity is being removed because it changed dimension.
+	//t`effect_target`tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction.
+	//t`removed_because_killed`tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction. Only if the entity is being removed because it was killed.
+	//t`removed_because_discarded`tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction. Only if the entity is being removed because it was despawned.
+	//t`removed_because_unloaded_chunk`tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction. Only if the entity is being removed because it was unloaded with a world chunk.
+	//t`removed_because_unloaded_player`tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction. Only if the entity is being removed because it was unloaded with a player, usually as a mount.
+	//t`removed_because_changed_dimension`tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction. Only if the entity is being removed because it changed dimension.
     removeEntityCommand?:string,
 	///List of model overlay textures. Example: ```"minecraft:textures/item/texture_name.png"```
 	overlays?:[string],
