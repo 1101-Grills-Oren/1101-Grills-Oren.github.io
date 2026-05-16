@@ -14,10 +14,11 @@ dispatch minecraft:resource[quality_commands:data_block] to struct BlockSettings
 	///Unused unless the block is of type `AmalgamBlock`
 	amalgamSpecific?: AmalgamSpecific,
 	arguments?: [blockargument],
-	///List of block tags. Block tags CANNOT be set in the normal way for these blocks.
+	///List of block tags. Block tags CANNOT be set in the normal way for these blocks due to technical difficulties.
+	///In order to check based on a tag, you will still have to define a block tag with no entries in the ususal manner in order for these tags to be usable anywhere except F3.
 	tags?: [string],
 }
-type blockargument=((#[id="block"] string)|((#[color="hex_rgb"] string)))
+type blockargument=((#[id="block"] string)|(#[color="hex_rgb"] string))
 dispatch minecraft:resource[quality_commands:data_effect] to struct CustomStatusEffectRecord {
 	category: StatusEffectCategory,
     color: #[color="composite_rgb"] int,
@@ -44,7 +45,7 @@ struct AttributeModifier {
 }
 
 struct StandardProperties {
-	///Block to copy property from. 
+	///Block to copy properties from. 
 	parent?: #[id="block"] string,
 	///Color that this block should appear as on the map. Defaults to purple.
 	mapColor?: MapColor,
@@ -62,7 +63,7 @@ struct StandardProperties {
 	resistance?: float,
 	soundGroup?: BlockSoundGroup,
 }
-enum(string) MapColor {
+enum(string) MapColor{
 	Clear = "clear",
 	PaleGreen = "pale_green",
 	PaleYellow = "pale_yellow",
