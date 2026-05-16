@@ -23,14 +23,40 @@ dispatch minecraft:resource[quality_commands:data_block] to struct BlockSettings
 }
 type colorString=((#[color="hex_rgb"] string)="#FF015B")
 type blockId=(#[id="block"] string)
-type blockargument=(colorString|blockId)
+type blockargument=(colorString|blockId|BlockSetType)
 dispatch minecraft:resource[quality_commands:data_effect] to struct CustomStatusEffectRecord {
+	///Whether the effect is beneficial, harmful, or neutral
 	category: StatusEffectCategory,
+	///Color of the particles
     color: #[color="composite_rgb"] int,
+	///List of attribute modifiers to apply
+	///Due to vanilla jank, only one modifier can be applied for each attribute.
 	attributeModifiers?:AttributeModifiers,
-    tickCommand?: string,
-    applyCommand?: string,
+	///A .mcfunction file to be run every tick an entity has this effect; If the listed function isn't present, logs "Function {command} not present!"
+    ///Entity Tags:
+	///\t`effect_target`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction.
+	tickCommand?: string,
+	///A .mcfunction file to be run whenever an entity is given this effect; If the listed function isn't present, logs "Function {command} not present!"
+	///Due to technical difficulties, this argument doesn't work at the moment
+    ///Entity Tags:
+	///\t`effect_target`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction.
+	applyCommand?: string,
+	///A .mcfunction file to be run whenver entity with this effect takes damage; If the listed function isn't present, logs "Function {command} not present!"
+	///Data values in the damaged entity:
+	///\t`data.last_damage_type`\tThe damage type of the last damage taken, as a string.
+	///\t`data.last_damage_amount`\tThe amount of the last damage taken, as a float.
+	///Entity Tags:
+	///\t`effect_target`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction.
+	///\t`attacker`\tApplied to the entity that damaged the entity with the effect. Only during the duration of the execution of the listed .mcfunction. May not exist.
     damageEntityCommand?:string,
+	///A .mcfunction file to be run whenever an entity with this effect is removed from the world; If the listed function isn't present, logs "Function {command} not present!"
+	///Entity Tags:
+	///\t`effect_target`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction.
+	///\t`removed_because_killed`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction. Only if the entity is being removed because it was killed.
+	///\t`removed_because_discarded`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction. Only if the entity is being removed because it was despawned.
+	///\t`removed_because_unloaded_chunk`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction. Only if the entity is being removed because it was unloaded with a world chunk.
+	///\t`removed_because_unloaded_player`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction. Only if the entity is being removed because it was unloaded with a player, usually as a mount.
+	///\t`removed_because_changed_dimension`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction. Only if the entity is being removed because it changed dimension.
     removeEntityCommand?:string,
 	///List of model overlay textures. Example: ```"minecraft:textures/item/texture_name.png"```
 	overlays?:[string]
@@ -48,7 +74,30 @@ struct AttributeModifier {
 	base_value: double,
 	operation: AttributeOperation,
 }
-
+struct BlockSetTypeRef {
+	type: "BlockSetType",
+	value: #[id="quality_commands:block_set_type"] string,
+}
+struct BlockSetType {
+	name: string,
+	canOpenByHand: boolean,
+	canOpenByWindCharge: boolean,
+	canButtonBeActivatedByArrows: boolean,
+	pressurePlateSensitivity: BlockSetType_ActivationRule,
+	soundType: BlockSoundGroup,
+	doorClose: #[id="sound_event"] string,
+	doorOpen: #[id="sound_event"] string,
+	trapdoorClose: #[id="sound_event"] string,
+	trapdoorOpen: #[id="sound_event"] string,
+	pressurePlateClickOff: #[id="sound_event"] string,
+	pressurePlateClickOn: #[id="sound_event"] string,
+	buttonClickOff: #[id="sound_event"] string,
+	buttonClickOn: #[id="sound_event"] string,
+}
+enum(string) BlockSetType_ActivationRule {
+	Everything = "everything",
+	Mobs = "mobs",
+}
 struct StandardProperties {
 	///Block to copy properties from. 
 	parent?: #[id="block"] string,
