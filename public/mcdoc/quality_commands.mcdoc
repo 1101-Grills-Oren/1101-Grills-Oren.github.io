@@ -15,6 +15,7 @@ dispatch minecraft:resource[quality_commands:data_block] to struct BlockSettings
 	amalgamSpecific?: AmalgamSpecific,
 	///List of arguments to be passed to the block constructor. The game WILL crash if these are invalid or do not match the block
 	///Current options: Color (#rrggbb), Block (identifier,VANILLA)
+	///enter #000 to change to color setter
 	arguments?: [blockargument],
 	///List of block tags. Block tags CANNOT be set in the normal way for these blocks due to technical difficulties.
 	///In order to check based on a tag, you will still have to define a block tag with no entries in the ususal manner in order for these tags to be usable anywhere except F3.
