@@ -60,7 +60,7 @@ dispatch minecraft:resource[quality_commands:data_effect] to struct CustomStatus
 	///\t`removed_because_changed_dimension`\tApplied to the entity that has the effect. Only during the duration of the execution of the listed .mcfunction. Only if the entity is being removed because it changed dimension.
     removeEntityCommand?:string,
 	///List of model overlay textures. Example: ```"minecraft:textures/item/texture_name.png"```
-	overlays?:[string]
+	overlays?:[string],
 }
 enum(string) StatusEffectCategory{
 	Beneficial = "beneficial",
@@ -79,7 +79,8 @@ struct BlockSetTypeRef {
 	type: "BlockSetType",
 	value: #[id="quality_commands:block_set_type"] string,
 }
-struct BlockSetType {
+type BlockSetType=(BlockSetTypeRecord)
+struct BlockSetTypeRecord {
 	name: string,
 	canOpenByHand: boolean,
 	canOpenByWindCharge: boolean,
