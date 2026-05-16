@@ -23,7 +23,8 @@ dispatch minecraft:resource[quality_commands:data_block] to struct BlockSettings
 }
 type colorString=((#[color="hex_rgb"] string)="#FF015B")
 type blockId=(#[id="block"] string)
-type blockargument=(colorString|blockId|BlockSetType)
+type soundEvent=(#[id="sound_event"] string)
+type blockargument=(colorString|soundEvent|blockId|BlockSetType)
 dispatch minecraft:resource[quality_commands:data_effect] to struct CustomStatusEffectRecord {
 	///Whether the effect is beneficial, harmful, or neutral
 	category: StatusEffectCategory,
