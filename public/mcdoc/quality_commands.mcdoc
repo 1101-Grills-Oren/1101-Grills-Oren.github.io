@@ -76,11 +76,12 @@ struct AttributeModifier {
 	operation: AttributeOperation,
 }
 struct BlockSetTypeRef {
-	type: "BlockSetType",
+	type: "BlockSetTypeRef",
 	value: #[id="quality_commands:block_set_type"] string,
 }
-type BlockSetType=(BlockSetTypeRecord)
+type BlockSetType=(BlockSetTypeRecord|BlockSetTypeRef)
 struct BlockSetTypeRecord {
+	type: "BlockSetType",
 	name: string,
 	canOpenByHand: boolean,
 	canOpenByWindCharge: boolean,
